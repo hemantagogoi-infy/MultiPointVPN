@@ -40,6 +40,5 @@ The repository has no (pre)releases yet, work in progress is within the main bra
   * Minutes: Access [meeting minutes](https://lf-camaraproject.atlassian.net/wiki/x/AYD7Bw) !! update this link to your minutes archive page using the "Share" link and delete the task
 * Mailing List
 
-  ⚠️ The mailing list need yet to be created (see [APIBacklog/issues/232](https://github.com/camaraproject/APIBacklog/issues/232))
-  * Subscribe / Unsubscribe to the mailing list <https://lists.camaraproject.org/g/sp-multi-point-vpn>.
-  * A message to the community of this Sub Project can be sent using <sp-multi-point-vpn@lists.camaraproject.org>.
+  * Subscribe / Unsubscribe to the mailing list <https://lists.camaraproject.org/g/sp-multipoint-vpn>.
+  * A message to the community of this Sub Project can be sent using <sp-multipoint-vpn@lists.camaraproject.org>.
