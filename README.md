@@ -17,7 +17,9 @@ Sandbox API Repository to describe, develop, document, and test the MultiPointVP
 
 * Service API(s) “MultiPointVPN” (see APIBacklog.md) 
 * The API(s) provide(s) the API consumer with the ability to:  
-  * §Short API scope description§ ⚠️ Add here a scope description according to the API proposal
+  * The MultiPoint VPN API transforms the process of ordering private or customized network services across multiple touchpoints. It enables users to create and configure on-demand edge connectivity services with guaranteed SLA and bandwidth with just one click, eliminating the need for manual orders through phone calls or customer managers. When the API is called with specific network SLA requirements, telecom operators can create non-public cloud leased network services by orchestrating IP VPN connections across various networks, including data centers, private clouds, operator networks, and satellite links
+  * <img width="8901" height="70" alt="image" src="https://github.com/user-attachments/assets/91007c7f-5b94-468c-ae77-f29fd8bc55d5" />
+
 * Describe, develop, document, and test the API(s)
 * Started: June 2025
 <!-- * Incubating stage since: {{incubation date}} --> 
