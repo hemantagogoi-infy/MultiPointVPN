@@ -1,3 +1,4 @@
 | Org                    | Name                                      | GitHub Username        |
 | -----------------------| ------------------------------------------| -----------------------|
-| §company§ | §name§ | §github_username§ |
+| Infosys | Bishnu Prasad Panda | bishnu-infy |
+| Infosys | Vijay Narasimha Murthy| vijaymurthyn |
