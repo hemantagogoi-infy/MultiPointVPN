@@ -1,0 +1,646 @@
+openapi: 3.0.3
+info:
+  title: MultiPoint Virtual Private Network
+  description: >
+    ##### Before starting to use the API, the developer needs to know about the
+    below specified details :
+
+    * Multipoint VPN service endpoint The URL pointing to the RESTful resource of the
+    Multipoint VPN API. 
+
+    * Authentication Security access keys such as OAuth 2.0 client credentials
+    used by client applications to invoke the Multipoint VPN API.
+
+    * Identifier for access point Customer Edge (CE) IPv4 addressand/or IPv6
+    address of the Customer Edge Router.
+
+    * Identifier for the endpoint cloud Provider Edge (PE) IPv4 and/or IPv6
+    address of the Cloud Provider Edge
+
+    * Identifier for the application server(AS)IPv4 and/or IPv6 address of the
+    application server (cloud virtual machine)
+
+    * App-Flow (between the application client and application server) The
+    developer wants to have non public network delivery for the precise
+    application data flow for the application users.     
+
+    * Duration Duration (in hours) for which the Multipoint VPN session (between CE and
+    cloud PE) should be created. This parameter is optional. When not specified,
+    a default session duration (e.g. 6 months) is applied. The user may request
+    a termination before its expiration.
+
+    * Physical Location Physical location of the Customer Edge Router.
+
+
+
+    NOTE- The private physical link between CE and cloud PE is default deployed
+    for one click calling, otherwise it is required to install the physical
+    link, which is out of the scope of this API.
+  version: wip
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+  x-camara-commonalities: 0.5
+externalDocs:
+  description: Project documentation at CAMARA
+  url: 'https://github.com/camaraproject/SiteToCloudVPN'
+servers:
+  - url: '{apiRoot}/multipoint-vpn/vwip'
+    variables:
+      apiRoot:
+        default: 'http://localhost:9091'
+        description: API root
+tags:
+  - name: Network Assessment
+    description: Operations to manage Multipoint VPN connection assessments
+  - name: Network
+    description: Operations to manage Multipoint VPN connection
+paths:
+  /network:
+    post:
+      tags:
+        - Network
+      summary: To create a multipoint virtual private network
+      description: Create a multipoint virtual private network
+      operationId: createNetwork
+      parameters:
+        - $ref: "#/components/parameters/x-correlator"
+      requestBody:
+        required: true
+        content:
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/NetworkCreate"
+            examples:
+              SITE_TO_CLOUD_VPN_CREATE_CONNECTION:
+                $ref: "#/components/examples/siteToCloudVPNCreateConnectionRequest"
+      responses:
+        "201":
+          description: CreateVPNConnectionResponse
+          headers:
+            x-correlator:
+              $ref: "#/components/headers/x-correlator"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Connection"
+              examples:
+                SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
+                  $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
+        "400":
+          $ref: "#/components/responses/Generic400"
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "500":
+          $ref: "#/components/responses/Generic500"  
+  /network/{serviceId}:
+    patch:
+      tags:
+        - Network
+      summary: To update a multipoint virtual private network
+      description: Update a new multipoint virtual private network
+      operationId: updateNetwork
+      parameters:
+        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/serviceId'
+      requestBody:
+        required: true
+        content:
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/NetworkUpdate"
+            examples:
+              SITE_TO_CLOUD_VPN_UPDATE_CONNECTION:
+                $ref: "#/components/examples/siteToCloudVPNUpdateConnectionRequest"
+      responses:
+        "200":
+          description: UpdateVPNConnectionResponse
+          headers:
+            x-correlator:
+              $ref: "#/components/headers/x-correlator"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Connection"
+              examples:
+                SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
+                  $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
+        "400":
+          $ref: "#/components/responses/Generic400"
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "500":
+          $ref: "#/components/responses/Generic500" 
+    get:
+      tags:
+        - Network
+      summary: retrieve multipoint virtual private network details
+      description: Retrieve multipoint virtual private network details
+      operationId: getVPNConnect
+      parameters:
+        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/serviceId'
+      responses:
+        "200":
+          description: getNetworkDetails
+          headers:
+            x-correlator:
+              $ref: "#/components/headers/x-correlator"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Connection"
+              examples:
+                SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
+                  $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
+        "400":
+          $ref: "#/components/responses/Generic400"
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "500":
+          $ref: "#/components/responses/Generic500"
+    delete:
+      tags:
+        - Network
+      summary: Delete multipoint virtual private network
+      description: Delete multipoint virtual private network
+      operationId: deleteNetwork
+      parameters:
+        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/serviceId'
+      responses:
+        "202":
+          description: deleteVPNConnectionResponse
+          headers:
+            x-correlator:
+              $ref: "#/components/headers/x-correlator"
+        "400":
+          $ref: "#/components/responses/Generic400"
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "500":
+          $ref: "#/components/responses/Generic500"
+  /assessment:
+    post:
+      tags:
+        - Network Assessment
+      summary: Assess Multipoint VPN connection feasibility
+      description: Get the feasibility assessment for a Multipoint VPN connection
+      operationId: assessConnectionFeasibility
+      parameters:
+        - $ref: "#/components/parameters/x-correlator"
+      requestBody:
+        required: true
+        content:
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/AssessmentRequest"
+            examples:
+              SITE_TO_CLOUD_VPN_ASSESSMENT:
+                $ref: "#/components/examples/siteToCloudVPNFeasibilityAssessmentRequest"
+      responses:
+        "200":
+          description: Assessment result
+          headers:
+            x-correlator:
+              $ref: "#/components/headers/x-correlator"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssessmentResult"
+              examples:
+                SITE_TO_CLOUD_VPN_ASSESSMENT_RESULT:
+                  $ref: "#/components/examples/siteToCloudVPNFeasibilityAssessmentResponse"
+        "400":
+          $ref: "#/components/responses/Generic400"
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "500":
+          $ref: "#/components/responses/Generic500"          
+components:
+  headers:
+    x-correlator:
+      description: Correlation id for the different services
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9-]{0,55}$
+  parameters:
+    x-correlator:
+      name: x-correlator
+      in: header
+      description: Correlation id for the different services
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9-]{0,55}$
+    serviceId:
+      name: serviceId
+      required: true
+      schema:
+        type: string
+      in: path
+      description: Identifier of the Resource
+  schemas:
+    Amount:
+      type: object
+      description: An amount in a given unit
+      properties:
+        amount:
+          type: number
+          format: float
+          default: 1
+          description: Numeric value in a given unit
+        currency:
+          type: string
+          description: currency
+    AssessmentRequest:
+      description: Base schema for all areas
+      type: object
+      properties:
+        isProtected:
+          type: boolean
+          description: Is Multipoint VPN protected
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        guaranteeBandwidth:
+          type: integer
+          description: Guarantee Bandwidth (Mps)
+          minimum: 1
+        duration:
+          $ref: '#/components/schemas/Duration'
+    AssessmentResult:
+      type: object
+      properties:
+        waitdays:
+          type: integer
+          description: the waiting-days until the vpn can be offered
+          minimum: 1
+        sla:
+          type: string
+          enum: 
+            - A
+            - AA
+            - AAA
+        rent:
+          $ref: '#/components/schemas/Amount'
+    Connection:
+      allOf:
+        - type: object
+          description: Another Characteristic that is related to the current Characteristic;
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the connection
+            customerEdge:
+              $ref: '#/components/schemas/EdgeConnection'
+            providerEdge:
+              $ref: '#/components/schemas/EdgeConnection'
+    Duration:
+      type: object
+      description: Guarantee duration
+      properties:
+        value:
+          type: number
+          format: float
+          default: 1
+          description: Numeric value in a given unit
+        unit:
+          type: string
+          description: unit
+    ErrorInfo:
+      description: Common schema for errors
+      type: object
+      required:
+        - status
+        - code
+        - message
+      properties:
+        status:
+          type: integer
+          description: HTTP status code returned along with this error response
+        code:
+          type: string
+          description: Code given to this error
+        message:
+          type: string
+          description: Detailed error description
+    EdgeConnection:
+      description: Edge connection details
+      type: object
+      properties:
+        type:
+          description: Multipoint VPN access point type
+          enum: 
+            - site
+            - cloud
+        primaryIpAddress:
+          $ref: '#/components/schemas/IpAddress'
+        secondaryIpAddress:
+          $ref: '#/components/schemas/IpAddress'
+        location:
+          type: string
+          description: connection location
+    IpAddress:
+      type: object
+      properties:
+        addressType:
+            type: string
+      required:
+         - addressType
+      discriminator:
+        propertyName: addressType 
+        mappings:                   
+          - Ipv4Addr: '#/components/schemas/Ipv4Address'
+          - Ipv6Addr: '#/components/schemas/Ipv6Address' 
+    Ipv4Address:           
+      allOf:
+        - $ref: '#/components/schemas/IpAddress'
+        - type: object
+          required:
+            - address
+          properties:
+            address:
+                type: string
+                format: ipv4  
+    Ipv6Address:
+      allOf:
+        - $ref: '#/components/schemas/IpAddress'
+        - type: object
+          required:
+            - address
+          properties:
+            address:
+              type: string
+              format: ipv6
+    Network:
+      description: Base Network Entity structure
+      type: object
+      properties:
+        serviceId:
+          type: string
+          description: unique id for network service
+        serviceName:
+          type: string
+          description: vpn service name
+        isProtected:
+          type: boolean
+          description: Is Multipoint VPN protected
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        sla:
+          type: string
+          enum: 
+            - A
+            - AA
+            - AAA
+        guaranteeBandwidth:
+          type: integer
+          description: Guarantee Bandwidth (Mps)
+          minimum: 1
+        duration:
+          $ref: '#/components/schemas/Duration'
+        routeProtocal:
+          type: string
+        resourceGroupId:
+          type: string
+        cloudGatewayIP:
+          type: string
+    NetworkCreate:
+      description: Base Connection Entity structure
+      type: object
+      properties:
+        serviceName:
+          type: string
+          description: vpn service name
+        isProtected:
+          type: boolean
+          description: Is Multipoint VPN protected
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        guaranteeBandwidth:
+          type: integer
+          description: Guarantee Bandwidth (Mps)
+          minimum: 1
+        sla:
+          type: string
+          enum: 
+            - A
+            - AA
+            - AAA
+        duration:
+          $ref: '#/components/schemas/Duration'
+        routeProtocal:
+          type: string
+    NetworkUpdate:
+      description: Base Connection Entity structure
+      type: object
+      properties:
+        guaranteeBandwidth:
+          type: integer
+          description: Guarantee Bandwidth (Mps)
+        sla:
+          type: string
+          enum: 
+            - A
+            - AA
+            - AAA
+
+  examples:
+    siteToCloudVPNFeasibilityAssessmentRequest:
+      summary: Assesment Sample 1 
+      description: Feasibility assessment sample 
+      value:
+        isProtected: true
+        connections:
+         - customerEdge:
+            type: site
+            primaryIP: 84.125.93.10
+            secondaryIP: 84.125.94.10
+            location: string
+           providerEdge:
+            type: site 
+            primaryIP: 84.125.93.10
+            secondaryIP: 84.125.94.10
+        guaranteeBandwidth: 20
+        duration: 
+          value: 6
+          unit: days
+        
+    siteToCloudVPNFeasibilityAssessmentResponse:
+      summary: Assesment Sample 1 
+      description: Feasibility assessment sample 
+      value:
+        waitdays: 1
+        sla: A
+        rent: 
+          amount: 2000
+          currency: GBP
+    siteToCloudVPNCreateConnectionRequest:
+      summary: Create Connection Sample 1 
+      description: Create Connection request sample
+      value:
+        isProtected: true
+        connections:
+          - customerEdge:
+              type: site
+              primaryIP: 84.125.93.10
+              secondaryIP: 84.125.94.10
+              location: string
+            providerEdge:
+              type: site 
+              primaryIP: 84.125.93.10
+              secondaryIP: 84.125.94.10
+        guaranteeBandwidth: 20
+        duration: 
+          value: 6
+          unit: days
+        
+    siteToCloudVPNCreateConnectionResponse:
+      summary: Create Connection Sampl 1 
+      description: Create Connection response sample 
+      value:
+        serviceId: 111111
+        connections:
+          - customerEdge:
+              type: site
+              primaryIP: 84.125.93.10
+              secondaryIP: 84.125.94.10
+              location: string
+            providerEdge:
+              type: site 
+              primaryIP: 84.125.93.10
+              secondaryIP: 84.125.94.10
+        resourceGroupId: 12121
+        cloudGatewayIP: 1.2.3.4
+    siteToCloudVPNUpdateConnectionRequest:
+      summary: Update Connection Sample 1 
+      description: Update Connection request sample
+      value:
+        serviceId: 111111
+        guaranteeBandwidth: 10Mbps
+        sla: A
+  responses:
+    Generic400:
+      description: Bad Request
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 400
+                  code:
+                    enum:
+                      - INVALID_ARGUMENT
+                      - OUT_OF_RANGE
+          examples:
+            GENERIC_400_INVALID_ARGUMENT:
+              description: Invalid Argument. Generic Syntax Exception
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: Client specified an invalid argument, request body or query param.
+            GENERIC_400_OUT_OF_RANGE:
+              description: Out of Range. Specific Syntax Exception used when a given field has a pre-defined range or a invalid filter criteria combination is requested
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: Client specified an invalid range.
+
+    Generic401:
+      description: Unauthorized
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 401
+                  code:
+                    enum:
+                      - UNAUTHENTICATED
+          examples:
+            GENERIC_401_UNAUTHENTICATED:
+              description: Request cannot be authenticated
+              value:
+                status: 401
+                code: UNAUTHENTICATED
+                message: Request not authenticated due to missing, invalid, or expired credentials.
+
+    Generic403:
+      description: Forbidden
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 403
+                  code:
+                    enum:
+                      - PERMISSION_DENIED
+          examples:
+            GENERIC_403_PERMISSION_DENIED:
+              description: Permission denied. OAuth2 token access does not have the required scope or when the user fails operational security
+              value:
+                status: 403
+                code: PERMISSION_DENIED
+                message: Client does not have sufficient permissions to perform this action.
+    Generic500:
+      description: Forbidden
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 500
+                  code:
+                    enum:
+                      - INTERNAL_SERVER_ERROR
+          examples:
+            GENERIC_500_INTERNAL_SERVER_ERROR:
+              description: Internal server error
+              value:
+                status: 500
+                code: Internal Server Error
+                message: Internal server error while processing request.
