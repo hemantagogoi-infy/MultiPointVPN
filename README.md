@@ -33,12 +33,10 @@ The repository has no (pre)releases yet, work in progress is within the main bra
 
 ## Contributing
 
-* Meetings are held virtually <!-- for new, independent Sandbox API repositories request a meeting link from the LF admin team or replace the information with the existing meeting information of the Sub Project -->
-
-  * Schedule: !! tbd
-  * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meetings/telcoapi) !! Update this link with your meeting registration/join link and delete the task
-  * Minutes: Access [meeting minutes](https://lf-camaraproject.atlassian.net/wiki/x/AYD7Bw) !! update this link to your minutes archive page using the "Share" link and delete the task
+* Meetings are held virtually
+  * Schedule: Bi-weekly meeting on Wednesday every 2 week(s), at 12:30 UTC
+  * [Registration / Join](https://zoom-lfx.platform.linuxfoundation.org/meetings/telcoapi) 
+  * Minutes: Access [meeting minutes](https://lf-camaraproject.atlassian.net/wiki/x/AYD7Bw) 
 * Mailing List
-
   * Subscribe / Unsubscribe to the mailing list <https://lists.camaraproject.org/g/sp-multi-point-vpn>.
   * A message to the community of this Sub Project can be sent using <sp-multi-point-vpn@lists.camaraproject.org>.
