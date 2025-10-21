@@ -520,7 +520,7 @@ components:
       description: Update Connection request sample
       value:
         serviceId: 111111
-        guaranteeBandwidth: 10Mbps
+        guaranteeBandwidth: 10
         sla: A
   responses:
     Generic400:
@@ -630,6 +630,6 @@ components:
               description: Internal server error
               value:
                 status: 500
-                code: Internal Server Error
+                code: INTERNAL_SERVER_ERROR
                 message: Internal server error while processing request.
-                
+
