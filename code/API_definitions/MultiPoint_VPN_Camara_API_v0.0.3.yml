@@ -21,7 +21,7 @@ info:
     When not specified, a default session duration (e.g. 6 months) is applied. The user may request a termination before its expiration.
 
     * Physical Location Physical location of the Customer Edge Router.
-    
+
     NOTE- The private physical link between CE and cloud PE is default deployed for one click calling,
     otherwise it is required to install the physical link, which is out of the scope of this API.
   version: wip
@@ -455,20 +455,20 @@ components:
       value:
         isProtected: true
         connections:
-          customerEdge:
-            type: site
-            primaryIP: 84.125.93.10
-            secondaryIP: 84.125.94.10
-            location: string
-          providerEdge:
-            type: site
-            primaryIP: 84.125.93.10
-            secondaryIP: 84.125.94.10
+          - customerEdge:
+              type: site
+              primaryIP: 84.125.93.10
+              secondaryIP: 84.125.94.10
+              location: string
+            providerEdge:
+              type: site
+              primaryIP: 84.125.93.10
+              secondaryIP: 84.125.94.10
         guaranteeBandwidth: 20
         duration:
           value: 6
           unit: days
-        
+
     siteToCloudVPNFeasibilityAssessmentResponse:
       summary: Assesment Sample 1
       description: Feasibility assessment sample
@@ -632,4 +632,3 @@ components:
                 status: 500
                 code: INTERNAL_SERVER_ERROR
                 message: Internal server error while processing request.
-
