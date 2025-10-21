@@ -5,37 +5,25 @@ info:
     ##### Before starting to use the API, the developer needs to know about the
     below specified details :
 
-    * Multipoint VPN service endpoint The URL pointing to the RESTful resource of the
-    Multipoint VPN API. 
+    * Multipoint VPN service endpoint The URL pointing to the RESTful resource of the Multipoint VPN API.
 
-    * Authentication Security access keys such as OAuth 2.0 client credentials
-    used by client applications to invoke the Multipoint VPN API.
+    * Authentication Security access keys such as OAuth 2.0 client credentials used by client applications to invoke the Multipoint VPN API.
 
-    * Identifier for access point Customer Edge (CE) IPv4 addressand/or IPv6
-    address of the Customer Edge Router.
+    * Identifier for access point Customer Edge (CE) IPv4 addressand/or IPv6 address of the Customer Edge Router.
 
-    * Identifier for the endpoint cloud Provider Edge (PE) IPv4 and/or IPv6
-    address of the Cloud Provider Edge
+    * Identifier for the endpoint cloud Provider Edge (PE) IPv4 and/or IPv6 address of the Cloud Provider Edge.
 
-    * Identifier for the application server(AS)IPv4 and/or IPv6 address of the
-    application server (cloud virtual machine)
+    * Identifier for the application server(AS)IPv4 and/or IPv6 address of the application server (cloud virtual machine).
 
-    * App-Flow (between the application client and application server) The
-    developer wants to have non public network delivery for the precise
-    application data flow for the application users.     
+    * App-Flow (between the application client and application server). The developer wants to have non public network delivery for the precise application data flow for the application users.
 
-    * Duration Duration (in hours) for which the Multipoint VPN session (between CE and
-    cloud PE) should be created. This parameter is optional. When not specified,
-    a default session duration (e.g. 6 months) is applied. The user may request
-    a termination before its expiration.
+    * Duration Duration (in hours) for which the Multipoint VPN session (between CE and cloud PE) should be created. This parameter is optional.
+    When not specified, a default session duration (e.g. 6 months) is applied. The user may request a termination before its expiration.
 
     * Physical Location Physical location of the Customer Edge Router.
-
-
-
-    NOTE- The private physical link between CE and cloud PE is default deployed
-    for one click calling, otherwise it is required to install the physical
-    link, which is out of the scope of this API.
+    
+    NOTE- The private physical link between CE and cloud PE is default deployed for one click calling,
+    otherwise it is required to install the physical link, which is out of the scope of this API.
   version: wip
   license:
     name: Apache 2.0
@@ -68,7 +56,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json: 
+          application/json:
             schema:
               $ref: "#/components/schemas/NetworkCreate"
             examples:
@@ -94,7 +82,7 @@ paths:
         "403":
           $ref: "#/components/responses/Generic403"
         "500":
-          $ref: "#/components/responses/Generic500"  
+          $ref: "#/components/responses/Generic500"
   /network/{serviceId}:
     patch:
       tags:
@@ -108,7 +96,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json: 
+          application/json:
             schema:
               $ref: "#/components/schemas/NetworkUpdate"
             examples:
@@ -134,7 +122,7 @@ paths:
         "403":
           $ref: "#/components/responses/Generic403"
         "500":
-          $ref: "#/components/responses/Generic500" 
+          $ref: "#/components/responses/Generic500"
     get:
       tags:
         - Network
@@ -200,7 +188,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json: 
+          application/json:
             schema:
               $ref: "#/components/schemas/AssessmentRequest"
             examples:
@@ -226,7 +214,7 @@ paths:
         "403":
           $ref: "#/components/responses/Generic403"
         "500":
-          $ref: "#/components/responses/Generic500"          
+          $ref: "#/components/responses/Generic500"
 components:
   headers:
     x-correlator:
@@ -288,7 +276,7 @@ components:
           minimum: 1
         sla:
           type: string
-          enum: 
+          enum:
             - A
             - AA
             - AAA
@@ -341,7 +329,7 @@ components:
       properties:
         type:
           description: Multipoint VPN access point type
-          enum: 
+          enum:
             - site
             - cloud
         primaryIpAddress:
@@ -355,15 +343,15 @@ components:
       type: object
       properties:
         addressType:
-            type: string
+          type: string
       required:
-         - addressType
+        - addressType
       discriminator:
-        propertyName: addressType 
-        mappings:                   
+        propertyName: addressType
+        mappings:
           - Ipv4Addr: '#/components/schemas/Ipv4Address'
-          - Ipv6Addr: '#/components/schemas/Ipv6Address' 
-    Ipv4Address:           
+          - Ipv6Addr: '#/components/schemas/Ipv6Address'
+    Ipv4Address:
       allOf:
         - $ref: '#/components/schemas/IpAddress'
         - type: object
@@ -371,8 +359,8 @@ components:
             - address
           properties:
             address:
-                type: string
-                format: ipv4  
+              type: string
+              format: ipv4
     Ipv6Address:
       allOf:
         - $ref: '#/components/schemas/IpAddress'
@@ -402,7 +390,7 @@ components:
             $ref: '#/components/schemas/Connection'
         sla:
           type: string
-          enum: 
+          enum:
             - A
             - AA
             - AAA
@@ -438,7 +426,7 @@ components:
           minimum: 1
         sla:
           type: string
-          enum: 
+          enum:
             - A
             - AA
             - AAA
@@ -455,43 +443,43 @@ components:
           description: Guarantee Bandwidth (Mps)
         sla:
           type: string
-          enum: 
+          enum:
             - A
             - AA
             - AAA
 
   examples:
     siteToCloudVPNFeasibilityAssessmentRequest:
-      summary: Assesment Sample 1 
-      description: Feasibility assessment sample 
+      summary: Assesment Sample 1
+      description: Feasibility assessment sample
       value:
         isProtected: true
         connections:
-         - customerEdge:
+          customerEdge:
             type: site
             primaryIP: 84.125.93.10
             secondaryIP: 84.125.94.10
             location: string
-           providerEdge:
-            type: site 
+          providerEdge:
+            type: site
             primaryIP: 84.125.93.10
             secondaryIP: 84.125.94.10
         guaranteeBandwidth: 20
-        duration: 
+        duration:
           value: 6
           unit: days
         
     siteToCloudVPNFeasibilityAssessmentResponse:
-      summary: Assesment Sample 1 
-      description: Feasibility assessment sample 
+      summary: Assesment Sample 1
+      description: Feasibility assessment sample
       value:
         waitdays: 1
         sla: A
-        rent: 
+        rent:
           amount: 2000
           currency: GBP
     siteToCloudVPNCreateConnectionRequest:
-      summary: Create Connection Sample 1 
+      summary: Create Connection Sample 1
       description: Create Connection request sample
       value:
         isProtected: true
@@ -502,17 +490,17 @@ components:
               secondaryIP: 84.125.94.10
               location: string
             providerEdge:
-              type: site 
+              type: site
               primaryIP: 84.125.93.10
               secondaryIP: 84.125.94.10
         guaranteeBandwidth: 20
-        duration: 
+        duration:
           value: 6
           unit: days
-        
+
     siteToCloudVPNCreateConnectionResponse:
-      summary: Create Connection Sampl 1 
-      description: Create Connection response sample 
+      summary: Create Connection Sampl 1
+      description: Create Connection response sample
       value:
         serviceId: 111111
         connections:
@@ -522,13 +510,13 @@ components:
               secondaryIP: 84.125.94.10
               location: string
             providerEdge:
-              type: site 
+              type: site
               primaryIP: 84.125.93.10
               secondaryIP: 84.125.94.10
         resourceGroupId: 12121
         cloudGatewayIP: 1.2.3.4
     siteToCloudVPNUpdateConnectionRequest:
-      summary: Update Connection Sample 1 
+      summary: Update Connection Sample 1
       description: Update Connection request sample
       value:
         serviceId: 111111
@@ -644,3 +632,4 @@ components:
                 status: 500
                 code: Internal Server Error
                 message: Internal server error while processing request.
+                
