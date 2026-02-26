@@ -31,9 +31,9 @@ info:
   x-camara-commonalities: 0.5
 externalDocs:
   description: Project documentation at CAMARA
-  url: 'https://github.com/camaraproject/SiteToCloudVPN'
+  url: 'https://github.com/camaraproject/MultiPointVPN'
 servers:
-  - url: '{apiRoot}/multipoint-vpn/vwip'
+  - url: '{apiRoot}/multipointvpn/vwip'
     variables:
       apiRoot:
         default: 'http://localhost:9091'
@@ -632,3 +632,4 @@ components:
                 status: 500
                 code: INTERNAL_SERVER_ERROR
                 message: Internal server error while processing request.
+
