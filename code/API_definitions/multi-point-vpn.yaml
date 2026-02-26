@@ -632,3 +632,4 @@ components:
                 status: 500
                 code: INTERNAL_SERVER_ERROR
                 message: Internal server error while processing request.
+
